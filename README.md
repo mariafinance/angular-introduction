@@ -1,135 +1,57 @@
-# Εισαγωγή στο Angular Framework
+## Βήμα 6: Routing
 
-## Βήμα 1: Απλή δέσμευση χαρακτηριστικών (one way binding)
-
-- Χρήση του placeholder `{{ <atribute_name > }}` για τη δεσμευση του χαρακτηριστικού `attribute_name` στο template του component.
-- Αν το χαρακτηριστικό της κλάσης είναι αντικείμενο τότε χρησιμοποιούμε τη γνωστή σύνταξη `{{ <object_name>.<attribute_name> }}`.
-
-## Βήμα 0: Προετοιμασία και βασικές ενέργειες
-
-- Εγκατάσταση του Angular CLI
+- Σκοπός μας είναι να κάνουμε επιλογές από το μενού στα αριστερά και τα component να εμφανίζονται στο χώρο δεξιά.
+- Δημιουργία του Welcome component, αυτό που θα εμφανίζεται πρώτο όταν ξεκινήσει η εφαρμογή (χρησιμοποιεί κι ένα λογότυπο από το `/assets`):
 
   ```bash
-  npm install -g @angular/cli@latest
+  ng g c welcome
   ```
 
-- Δημιουργία ενός νέου Angular Project
+- Στο αρχείο `app.routes.ts` ο πίνακας `routes` περιέχει αντικείμενα που είναι ο κατάλογος των path που εμφανίζονται στο μενού της εφαρμογής μαζί με το Angular component που αντιστοιχεί στο path.
 
-  ```bash
-  ng new angular-introduction --standalone --skip-tests
+  ```typescript
+  import { Routes } from "@angular/router";
+  import { EventBindExampleComponent } from "src/app/components/event-bind-example/event-bind-example.component";
+  import { WelcomeComponent } from "./components/welcome/welcome.component";
+
+  export const routes: Routes = [
+    { path: "event-bind-example", component: EventBindExampleComponent },
+    { path: "welcome", component: WelcomeComponent },
+    { path: "", redirectTo: "/welcome", pathMatch: "full" },
+  ];
   ```
 
-- Επεμβάσεις στο αρχείο `ts.config.json`
+- Ήδη στο αρχείο `app.config.ts` ο κατάλογος των routes περνάει στο `provideRouter`:
 
-  ```json
-  {
+  ```typescript
+  import { ApplicationConfig } from "@angular/core";
+  import { provideRouter } from "@angular/router";
+
+  import { routes } from "./app.routes";
+
+  export const appConfig: ApplicationConfig = {
+    providers: [provideRouter(routes)],
+  };
+  ```
+
+- Το ακριβές σημείο στο template που θα εισάγονται τα component δηλώνεται με τη χρήση του tag `<router-outlet>`:
+
+  ```html
   ...
-  "compilerOptions": {
-      ...
-      "baseUrl": "./",
-      "strict": false,
-      ...
-  }
+  <span class="flex-grow-1 p-2 text-nowrap">
+    <router-outlet></router-outlet>
+  </span>
   ...
-  }
   ```
 
-- Εκκίνηση του Angular Project
+- Παράδειγμα ροής για μια επιλογή του χρήστη:
 
-  ```bash
-  ❯ ng serve
-  Initial chunk files | Names         | Raw size
-  polyfills.js        | polyfills     | 83.60 kB |
-  main.js             | main          |  1.67 kB |
-  styles.css          | styles        | 95 bytes |
+  1. Ο χρήστης επιλέγει κάτι από το μενού που στην HTML το tag που αφορά την επιλογή συμπεριλαμβάνει την οδηγία `routerLink`, π.χ. στο `app.component.html` το tag `<span role="button" routerLink="event-bind-example">Event Bind Example</span>`.
+  2. Ο έλεγχος μεταβιβάζεται στο αρχείο `app.routes.ts` όπου γίνεται αναζήτηση στον πίνακα `routes` για την εύρεση του αντικειμένου που έχει τιμή στο χαρακτηριστικό `path` ίδια με την τιμή του `routerLink` στο tag από το βήμα 1.
+  3. To URL αλλάζει σε αυτό που αντιστοιχεί στο path του αντικειμένου του βήματος 2.
+  4. Στο πλαίσιο του `<router-outlet></router-outlet>` εμφανίζεται το component από το χαρακτηριστικό του αντικειμένου του βήματος 2.
 
-                      | Initial total | 85.36 kB
+- Δημιουργία των `ComponentInputExampleComponent` και `ForDirectiveExampleComponent` και προσθήκη στο μενού της εφαρμογής:
 
-  Application bundle generation complete. [1.241 seconds]
-
-  Watch mode enabled. Watching for file changes...
-  ➜  Local:   http://localhost:4200/
-  ➜  press h + enter to show help
-  ```
-
-- Η εφαρμογή είναι διαθέσιμη στη διεύθυνση `http://localhost:4200/`
-
-- Δημιουργία online repository στο GitHub (`angular-introduction`) και αποστολή του κώδικα
-
-  ```bash
-  git remote add origin git@github.com:christodoulos/angular-introduction.git
-  git push -u origin main
-  ```
-
-- Δημιουργία του repository `<username>.github.io` αν δεν υπάρχει ήδη.
-
-- Προσθήκη δυνατότητας deployment στις σελίδες gh-pages του GitHub
-
-  ```bash
-  ng add angular-cli-ghpages
-  ```
-
-- Προσθήκη του _deploy_ script στο αρχείο `package.json`
-
-  ```json
-  {
-  ...
-  "scripts": {
-      ...
-      "deploy": "ng deploy --base-href=https://<username>.github.io/angular-introduction/"
-  }
-  ...
-  }
-  ```
-
-- Αποστολή της εφαρμογής στις σελίδες gh-pages του GitHub
-
-  ```bash
-  npm run deploy
-  ```
-
-- Η εφαρμογή είναι διαθέσιμη στη διεύθυνση `https://<username>.github.io/angular-introduction/`
-
-- Ενεργοποίηση του GitHub Pages για το repository `<username>.github.io/angular-introduction`
-
-- Η εφαρμογή είναι διαθέσιμη στη διεύθυνση `https://<username>.github.io/angular-introduction/`
-
-- Εγκατάσταση του bootstrap
-
-  ```bash
-  npm install bootstrap
-  ```
-
-- Επεξεργασία του αρχείου `angular.json`
-
-  ```json
-  {
-  ...
-  "styles": [
-      "src/styles.css",
-      "node_modules/bootstrap/dist/css/bootstrap.min.css"
-  ],
-  ...
-  }
-  ```
-
-- **Επανεκκίνηση του Angular Project** μετά από κάθε αλλαγή στο αρχείο `angular.json` είναι απαραίτητο να εκκινηθεί ξανά το Angular Project (^C και ξανά `ng serve`)
-
-- Τοπική εγκατάσταση του `prettier` και δημιουργία του αρχείου `.prettierrc`
-
-  ```bash
-  npm install --save-dev prettier
-  ```
-
-  ```json
-  {
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
-  }
-  ```
+  1. Ενημέρωση του αρχείου `app.routes.ts`
+  2. Ενημέρωση του html μενού με τις κατάλληλες οδηγίες `routerLink`
