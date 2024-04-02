@@ -1,37 +1,49 @@
 {
-  "hash": "403349e2",
-  "configHash": "a2454d6a",
-  "lockfileHash": "176d947f",
-  "browserHash": "bf0ec63e",
+  "hash": "ec90f530",
+  "configHash": "0ff067cb",
+  "lockfileHash": "ee4e6550",
+  "browserHash": "2384cece",
   "optimized": {
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "590c7e07",
+      "fileHash": "3ffdae40",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "30c7e190",
+      "fileHash": "bacdb8ee",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "d2cc94de",
+      "fileHash": "01fc6204",
       "needsInterop": false
     },
     "lodash-es": {
       "src": "../../../../../node_modules/lodash-es/lodash.js",
       "file": "lodash-es.js",
-      "fileHash": "7edc5ef5",
+      "fileHash": "8719e60e",
+      "needsInterop": false
+    },
+    "@angular/platform-browser/animations/async": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/animations/async.mjs",
+      "file": "@angular_platform-browser_animations_async.js",
+      "fileHash": "8747b7ea",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-Z4VMPXXJ": {
-      "file": "chunk-Z4VMPXXJ.js"
+    "chunk-BGZ7HKOE": {
+      "file": "chunk-BGZ7HKOE.js"
+    },
+    "browser-2RQONXPJ": {
+      "file": "browser-2RQONXPJ.js"
+    },
+    "chunk-FRXMMEXG": {
+      "file": "chunk-FRXMMEXG.js"
     },
     "chunk-GPYB2BZR": {
       "file": "chunk-GPYB2BZR.js"
