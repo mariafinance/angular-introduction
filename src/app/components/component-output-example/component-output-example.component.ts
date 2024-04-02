@@ -17,7 +17,7 @@ export class ComponentOutputExampleComponent {
   constructor(public dialog: Dialog){};
 
   onPersonClicked(person: EPerson) {
-    //alert.
+    
     this.dialog.open(PersonDialogComponent, {
       data: person,
     });
