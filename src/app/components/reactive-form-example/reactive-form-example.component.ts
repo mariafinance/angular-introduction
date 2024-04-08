@@ -7,17 +7,20 @@ import { SimpleDatatableComponent } from '../simple-datatable/simple-datatable.c
 @Component({
   selector: 'app-reactive-form-example',
   standalone: true,
-  imports: [EpersonReactiveFormComponent,
-  PersonTableComponent, SimpleDatatableComponent],
+  imports: [
+    EpersonReactiveFormComponent,
+    PersonTableComponent,
+    SimpleDatatableComponent,
+  ],
   templateUrl: './reactive-form-example.component.html',
-  styleUrl: './reactive-form-example.component.css'
+  styleUrl: './reactive-form-example.component.css',
 })
 export class ReactiveFormExampleComponent {
   currentPerson: EPerson;
-  persons: EPerson[] = []
+  persons: EPerson[] = [];
 
   onPerson(person: EPerson) {
-    this.currentPerson = person
+    this.currentPerson = person;
     this.persons.push(person);
   }
 }
