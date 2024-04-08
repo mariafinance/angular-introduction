@@ -9,6 +9,6 @@ const JACK_NORRIS_JOKES_API_URL = 'https://api.chucknorris.io/jokes/random';
   providedIn: 'root'
 })
 export class JokesService {
-//http: einai h metavlhth tou service
+//"http": einai h metavlhth tou service 
   http: HttpClient = inject(HttpClient);
 }
