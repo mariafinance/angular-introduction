@@ -6,8 +6,6 @@ import { CrudNavbarComponent } from '../crud-navbar/crud-navbar.component';
   standalone: true,
   imports: [CrudNavbarComponent],
   templateUrl: './crud-read-example.component.html',
-  styleUrl: './crud-read-example.component.css'
+  styleUrl: './crud-read-example.component.css',
 })
-export class CrudReadExampleComponent {
-
-}
+export class CrudReadExampleComponent {}
