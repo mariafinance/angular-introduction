@@ -6,8 +6,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   standalone: true,
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './crud-navbar.component.html',
-  styleUrl: './crud-navbar.component.css'
+  styleUrl: './crud-navbar.component.css',
 })
-export class CrudNavbarComponent {
-
-}
+export class CrudNavbarComponent {}
