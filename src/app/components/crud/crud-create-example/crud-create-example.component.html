@@ -1,5 +1,129 @@
 <div class="d-flex flex-column gap-2">
-  <app-crud-navbar>
-      <div>CRUD Create</div>
-  </app-crud-navbar>
+    <app-crud-navbar></app-crud-navbar>
+    <div>
+        <h4>CRUD Create Example</h4>
+        <h5>Εισαγωγή Πελάτη</h5>
+
+        <form [formGroup]="form" class="d-flex flex-column gap-2 w-50">
+            <mat-form-field>
+                <mat-label>Όνομα</mat-label>
+                <input matInput type="text" formControlName="givenName" />
+                @if (form.get("givenName").invalid && form.get("givenName").touched) {
+                <mat-error>Το όνομα είναι απαραίτητο</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Επώνυμο</mat-label>
+                <input matInput type="text" formControlName="surName" />
+                @if (form.get("surName").invalid && form.get("surName").touched) {
+                <mat-error>Το επώνυμο είναι απαραίτητο</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput type="text" formControlName="email" />
+                @if (form.get("email").hasError("duplicateEmail")) {
+                <mat-error>Αυτό το email είναι ήδη καταχωρημένο</mat-error>
+                } @else {
+                @if (form.get("email").invalid && form.get("email").touched) {
+                <mat-error>Το email δεν είναι συμπληρωμένο ή δεν έχει σωστή μορφή</mat-error>
+                }
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>ΑΦΜ</mat-label>
+                <input matInput type="text" formControlName="afm" />
+                @if (form.get("afm").hasError("duplicateEmail")) {
+                <mat-error>Αυτό το ΑΦΜ είναι ήδη καταχωρημένο</mat-error>
+                } @else {
+                @if (form.get("afm").invalid && form.get("afm").touched) {
+                <mat-error>Το ΑΦΜ δεν είναι συμπληρωμένο ή δεν έχει σωστή μορφή</mat-error>
+                }
+                }
+            </mat-form-field>
+            <div formArrayName="phoneNumbers">
+                @for (phone of phoneNumbers.controls; let i = $index; track i) {
+                <div [formGroupName]="i" class="d-flex gap-3 align-items-center">
+                    <mat-form-field>
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput type="text" formControlName="number" />
+                        @if (phone.get("number").invalid && phone.get("number").touched) {
+                        <mat-error class="text-wrap">
+                            Ο αριθμός του τηλεφώνου είναι απαραίτητος
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="type">
+                            <mat-option value="Mobile">Κινητό</mat-option>
+                            <mat-option value="Work">Εργασία</mat-option>
+                            <mat-option value="Home">Σπίτι</mat-option>
+                        </mat-select>
+                        @if (phone.get("type").invalid && phone.get("type").touched) {
+                        <mat-error class="text-wrap">
+                            Πρέπει να διαλέξετε κάποιον τύπο τηλεφώνου
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                    @if (phoneNumbers.controls.length > 1 && i !== 0) {
+                    <mat-icon role="button" (click)="removePhoneNumber(i)" class="cursor-pointer">delete</mat-icon>
+                    }
+                    @if (phoneNumbers.controls[i].valid) {
+                    <mat-icon role="button" (click)="addPhoneNumber()" class="cursor-pointer">add</mat-icon>
+                    }
+                </div>
+                }
+            </div>
+            <div formGroupName="address" class="d-flex flex-column">
+                <mat-form-field>
+                    <mat-label>Οδός</mat-label>
+                    <input matInput type="text" formControlName="street" />
+                    @if (
+                    form.get("address.street").invalid &&
+                    form.get("address.street").touched
+                    ) {
+                    <mat-error>Η οδός είναι απαραίτητη</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Αριθμός</mat-label>
+                    <input matInput type="text" formControlName="number" />
+                    @if (
+                    form.get("address.number").invalid &&
+                    form.get("address.number").touched
+                    ) {
+                    <mat-error>Ο αριθμός είναι απαραίτητος</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Πόλη</mat-label>
+                    <input matInput type="text" formControlName="city" />
+                    @if (
+                    form.get("address.city").invalid && form.get("address.city").touched
+                    ) {
+                    <mat-error>Η πόλη είναι απαραίτητη</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Ταχυδρομικός Κώδικας</mat-label>
+                    <input matInput type="text" formControlName="zipCode" />
+                    @if (
+                    form.get("address.zipCode").invalid &&
+                    form.get("address.zipCode").touched
+                    ) {
+                    <mat-error>Ο ταχυδρομικός κώδικας είναι απαραίτητος</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </form>
+        <div class="d-flex gap-2">
+            <button mat-raised-button color="primary" (click)="submit(form.value)" [disabled]="form.invalid">
+                Υποβολή
+            </button>
+            <button mat-raised-button color="warn" (click)="form.reset()">
+                Επαναφορά
+            </button>
+        </div>
+    </div>
 </div>
